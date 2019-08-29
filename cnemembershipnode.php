@@ -33,10 +33,10 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
       //Drupal specific code
       global $user;
       $node = new stdClass();
-      $node->title = $contact['display_name'];
+      $node->title = $basicContact['display_name'];
       $node->type = 'nonprofit';
       // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
-      node_object_prepare($node);
+      //node_object_prepare($node);
       // Or e.g. 'en' if locale is enabled.
       $node->language = LANGUAGE_NONE;
       $node->uid = $user->uid;
@@ -89,7 +89,7 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
         'target_type' => 'civicrm_contact',
       );
 
-      $node = node_submit($node);
+      //$node = node_submit($node);
       node_save($node);
     }
   }
