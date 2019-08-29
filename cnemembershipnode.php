@@ -5,7 +5,7 @@ use CRM_Cnemembershipnode_ExtensionUtil as E;
 
 function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if ($objectName == 'Membership' && $op == 'create') {
-    if ($objectRef->membership_type_id == 2 && $objectRef->status_id == 1) {
+    if ($objectRef->membership_type_id == 2 && $objectRef->status_id == 1 && $objectRef->owner_membership_id == NULL) {
       try {
         $basicContact = civicrm_api3('Contact', 'getsingle', [
           'sequential' => 1,
