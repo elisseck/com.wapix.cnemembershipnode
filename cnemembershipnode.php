@@ -7,10 +7,15 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
   if ($objectName == 'Membership' && $op == 'create') {
     if ($objectRef->membership_type_id == 2 && $objectRef->status_id == 1) {
       try {
-        $contact = civicrm_api3('Contact', 'getsingle', [
+        $basicContact = civicrm_api3('Contact', 'getsingle', [
           'sequential' => 1,
           'id' => $objectRef->contact_id,
         ]);
+        $custom = civicrm_api3('Contact', 'getsingle', array(
+          'sequential' => 1,
+          'return' => "custom_2,custom_3,custom_38,custom_16,custom_87,custom_101,custom_103,custom_119,custom_98,custom_97,custom_95,custom_96,custom_112,custom_100,custom_90,custom_9,custom_72,custom_75,custom_71,custom_91",
+          'id' => $objectRef->contact_id,
+        ));
         $website = civicrm_api3('Website', 'get', [
           'sequential' => 1,
           'contact_id' => $objectRef->contact_id,
@@ -43,43 +48,43 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
       $node->comment = 0;
       //TEXT FIELDS
       $node->field_url[$node->language][]['value'] = $website['values'][0]['url'];
-      $node->field_address[$node->language][]['value'] = $contact['street_address'];
-      $node->field_address2[$node->language][]['value'] = $contact['supplemental_address_1'];
-      $node->field_zip[$node->language][]['value'] = $contact['postal_code'];
-      $node->field_phone_ce[$node->language][]['value'] = $contact['phone'];
-      $node->field_ci_email[$node->language][]['value'] = $contact['email'];
+      $node->field_address[$node->language][]['value'] = $basicContact['street_address'];
+      $node->field_address2[$node->language][]['value'] = $basicContact['supplemental_address_1'];
+      $node->field_zip[$node->language][]['value'] = $basicContact['postal_code'];
+      $node->field_phone_ce[$node->language][]['value'] = $basicContact['phone'];
+      $node->field_ci_email[$node->language][]['value'] = $basicContact['email'];
       $node->field_primary_contact_last[$node->language][]['value'] = "";
       $node->field_primary_contact_email[$node->language][]['value'] = "";
-      $node->field_ni_mission[$node->language][]['value'] = $contact['custom_2'];
-      $node->field_ni_programs[$node->language][]['value'] = $contact['custom_3'];
-      $node->field_ni_yearfounded[$node->language][]['value'] = $contact['custom_38'];
-      $node->field_ni_director[$node->language][]['value'] = $contact['custom_16'];
-      $node->field_ein[$node->language][]['value'] = $contact['custom_87'];
+      $node->field_ni_mission[$node->language][]['value'] = $custom['custom_2'];
+      $node->field_ni_programs[$node->language][]['value'] = $custom['custom_3'];
+      $node->field_ni_yearfounded[$node->language][]['value'] = $custom['custom_38'];
+      $node->field_ni_director[$node->language][]['value'] = $custom['custom_16'];
+      $node->field_ein[$node->language][]['value'] = $custom['custom_87'];
 
       //SELECT FIELDS
-      $node->field_mdd_city[$node->language][]['value'] = $contact['city'];
-      $node->field_state[$node->language][]['value'] = $contact['state_province'];
-      $node->field_gi_budget[$node->language][]['value'] = $contact['custom_101'];
-      $node->field_ni_personnel[$node->language][]['value'] = $contact['custom_103'];
-      $node->field_nplegal[$node->language][]['value'] = $contact['custom_119'];
+      $node->field_mdd_city[$node->language][]['value'] = $basicContact['city'];
+      $node->field_state[$node->language][]['value'] = $basicContact['state_province'];
+      $node->field_gi_budget[$node->language][]['value'] = $custom['custom_101'];
+      $node->field_ni_personnel[$node->language][]['value'] = $custom['custom_103'];
+      $node->field_nplegal[$node->language][]['value'] = $custom['custom_119'];
 
       //CHECKBOXES
-      $node->field_county[$node->language][]['value'] = $contact['custom_98'];
-      $node->field_ni_ntee[$node->language][]['value'] = $contact['custom_95'];
-      $node->field_ni_pop[$node->language][]['value'] = $contact['custom_96'];
-      $node->field_ni_counties[$node->language][]['value'] = $contact['custom_97'];
-      $node->field_volunteer[$node->language][]['value'] = $contact['custom_100'];
-      $node->field_types_services_offered[$node->language][]['value'] = $contact['custom_90'];
+      $node->field_county[$node->language][]['value'] = $custom['custom_98'];
+      $node->field_ni_ntee[$node->language][]['value'] = $custom['custom_95'];
+      $node->field_ni_pop[$node->language][]['value'] = $custom['custom_96'];
+      $node->field_ni_counties[$node->language][]['value'] = $custom['custom_97'];
+      $node->field_volunteer[$node->language][]['value'] = $custom['custom_100'];
+      $node->field_types_services_offered[$node->language][]['value'] = $custom['custom_90'];
 
       //LINK FIELDS
-      $node->field_facebook[$node->language][]['url'] = $contact['custom_72'];
-      $node->field_twitter[$node->language][]['url'] = $contact['custom_75'];
-      $node->field_linkedin[$node->language][]['url'] = $contact['custom_71'];
-      $node->field_youtube[$node->language][]['url'] = $contact['custom_91'];
+      $node->field_facebook[$node->language][]['url'] = $custom['custom_72'];
+      $node->field_twitter[$node->language][]['url'] = $custom['custom_75'];
+      $node->field_linkedin[$node->language][]['url'] = $custom['custom_71'];
+      $node->field_youtube[$node->language][]['url'] = $custom['custom_91'];
 
       // Entity reference field.
       $node->field_civicrm_org[$node->language][] = array(
-        'target_id' => $contact['id'],
+        'target_id' => $basicContact['id'],
         // "taxonomy_term" or other valid entity machine name.
         'target_type' => 'civicrm_contact',
       );
