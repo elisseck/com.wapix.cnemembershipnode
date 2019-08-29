@@ -47,12 +47,12 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
       // Comment is 0, 1, 2; 0 = disabled, 1 = read only, or 2 = read/write.
       $node->comment = 0;
       //TEXT FIELDS
-      $node->field_url[$node->language][]['value'] = $website['values'][0]['url'];
+      $node->field_url[$node->language][]['url'] = $website['values'][0]['url'];
       $node->field_address[$node->language][]['value'] = $basicContact['street_address'];
-      $node->field_address2[$node->language][]['value'] = $basicContact['supplemental_address_1'];
+      $node->field_address2[$node->language][]['value'] = $basicContact['supplemental_address'];
       $node->field_zip[$node->language][]['value'] = $basicContact['postal_code'];
       $node->field_phone_ce[$node->language][]['value'] = $basicContact['phone'];
-      $node->field_ci_email[$node->language][]['value'] = $basicContact['email'];
+      $node->field_ci_email[$node->language][]['email'] = $basicContact['email'];
       $node->field_primary_contact_last[$node->language][]['value'] = "";
       $node->field_primary_contact_email[$node->language][]['value'] = "";
       $node->field_ni_mission[$node->language][]['value'] = $custom['custom_2'];
