@@ -29,7 +29,7 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
         )));
       }
     }
-    if ($contact) {
+    if ($basicContact) {
       //Drupal specific code
       global $user;
       $node = new stdClass();
