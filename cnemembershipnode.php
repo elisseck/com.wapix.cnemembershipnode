@@ -66,28 +66,33 @@ function cnemembershipnode_civicrm_post($op, $objectName, $objectId, &$objectRef
       $node->field_state[$node->language][]['value'] = $basicContact['state_province'];
       $node->field_gi_budget[$node->language][]['value'] = $custom['custom_101'];
       $node->field_ni_personnel[$node->language][]['value'] = $custom['custom_103'];
-      $node->field_nplegal[$node->language][]['value'] = $custom['custom_119'];
-
+      foreach ($custom['custom_119'] as $c) {
+        $node->field_nplegal[$node->language][]['value'] = $c;
+      }
       //CHECKBOXES
-      $node->field_county[$node->language][]['value'] = $custom['custom_98'];
-      $node->field_ni_ntee[$node->language][]['value'] = $custom['custom_95'];
-      $node->field_ni_pop[$node->language][]['value'] = $custom['custom_96'];
-      $node->field_ni_counties[$node->language][]['value'] = $custom['custom_97'];
-      $node->field_volunteer[$node->language][]['value'] = $custom['custom_100'];
-      $node->field_types_services_offered[$node->language][]['value'] = $custom['custom_90'];
-
+      foreach ($custom['custom_98'] as $c) {
+        $node->field_county[$node->language][]['value'] = $c;
+      }
+      foreach ($custom['custom_95'] as $c) {
+        $node->field_ni_ntee[$node->language][]['value'] = $c;
+      }
+      foreach ($custom['custom_96'] as $c) {
+        $node->field_ni_pop[$node->language][]['value'] = $c;
+      }
+      foreach ($custom['custom_97'] as $c) {
+        $node->field_ni_counties[$node->language][]['value'] = $c;
+      }
+      foreach ($custom['custom_100'] as $c) {
+        $node->field_volunteer[$node->language][]['value'] = $c;
+      }
+      foreach ($custom['custom_90'] as $c) {
+        $node->field_types_services_offered[$node->language][]['value'] = $c;
+      }
       //LINK FIELDS
       $node->field_facebook[$node->language][]['url'] = $custom['custom_72'];
       $node->field_twitter[$node->language][]['url'] = $custom['custom_75'];
       $node->field_linkedin[$node->language][]['url'] = $custom['custom_71'];
       $node->field_youtube[$node->language][]['url'] = $custom['custom_91'];
-
-      // Entity reference field.
-      $node->field_civicrm_org[$node->language][] = array(
-        'target_id' => $basicContact['id'],
-        // "taxonomy_term" or other valid entity machine name.
-        'target_type' => 'civicrm_contact',
-      );
 
       //$node = node_submit($node);
       node_save($node);
